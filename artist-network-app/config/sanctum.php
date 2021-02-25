@@ -15,7 +15,7 @@ return [
 
     'stateful' => explode(',', env(
         'SANCTUM_STATEFUL_DOMAINS',
-        'artist-network.local:8080'
+        'localhost,localhost:8000,127.0.0.1,127.0.0.1:8000,::1'
     )),
 
     /*

@@ -1,5 +1,5 @@
 module.exports = {
     devServer: {
-      host: 'artist-network.local'
+      host: 'app.artist-network.local'
     }
   }  

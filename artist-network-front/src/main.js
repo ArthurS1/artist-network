@@ -10,7 +10,7 @@ Vue.config.productionTip = false
 
 // Vue plugins
 Vue.use(VueAxios, Axios.create({
-    baseURL: 'http://artist-network.local:8000/',
+    baseURL: 'http://api.artist-network.local:8000/',
     withCredentials: true,
 }))
 
