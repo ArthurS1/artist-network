@@ -11,7 +11,7 @@
                 <b-form-input type="email" placeholder="email" class="my-3" v-model="form.email"></b-form-input>
                 <b-form-input type="password" placeholder="mot de passe" class="my-3" v-model="form.password"></b-form-input>
                 <div class="d-flex justify-content-around mt-5">
-                    <b-button pill variant="light" type="submit" @click="$router.push('/register')">Créer un compte</b-button>
+                    <b-button pill variant="light" type="button" @click="$router.push('/register')">Créer un compte</b-button>
                     <b-button pill variant="primary" type="submit">Connexion</b-button>
                 </div>
             </b-form>
