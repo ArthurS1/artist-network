@@ -1,7 +1,11 @@
 <template>
-    <div class="d-flex flex-column justify-content-center align-items-center vh-100 vw-100">
+    <div class="d-flex flex-column mt-5 mt-md-0 justify-content-center align-items-center vh-100 vw-100">
         <div class="container d-flex flex-column p-lg-5 p-2 m-2">
             <b-form @submit="handleLogin">
+                <div class="alert alert-warning" role="alert" v-if="connectionError">
+                    {{connectionErrorMsg}}
+                    
+                </div>
                 <h1 class="title">Connectez-vous</h1>
                 <img src="@/assets/logo.artist.network.svg" class="mx-auto d-block my-5">
                 <b-form-input type="email" placeholder="email" class="my-3" v-model="form.email"></b-form-input>
@@ -22,28 +26,35 @@ export default {
             form: {
                 email: '',
                 password: '',
-            }
+            },
+            connectionError: false,
+            connectionErrorMsg: '',
         }
     },
     methods: {
+        showConnectionError() {
+            this.connectionError = true;
+            this.connectionErrorMsg = "Impossible de se connecter au serveur, veuillez réessayer ultérieurement."
+        },
+        showLoginError() {
+            this.connectionError = true;
+            this.connectionErrorMsg = "Le mot de passe et l'email entrés ne correspondent à aucuns de nos utilisateurs. Revérifiez vos informations et réessayez."
+        },
         handleLogin(event) {
+            this.connectionError = false;
             event.preventDefault()
             this.axios.get('sanctum/csrf-cookie').then(() => {
-                this.axios.post('login', this.from).then(() => {
-                    console.log('User signed in!');
-                }).catch(error => console.log(error));
-            });
+                this.axios.post('login', this.from).then((response) => {
+                    if(response.data.authentication == 'ko')
+                        this.showLoginError();
+                }).catch(this.showConnectionError);
+            }).catch(this.showConnectionError);
         }
     }
 }
 </script>
 
-<style scoped>
-
-.title{
-    font-weight: 700;
-    text-align: center;
-}
+<style lang="scss" scoped>
 
 .container {
     background-color: white;
@@ -51,5 +62,17 @@ export default {
     width: 25%;
 }
 
+@media (max-width: 767.98px) {
+    .container {
+        background-color: white;
+        border-radius: 0.5rem;
+        width: auto;
+    }
+}
+
+.title {
+    font-weight: 700;
+    text-align: center;
+}
 
 </style>
