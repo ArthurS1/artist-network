@@ -1,14 +1,20 @@
 <template>
-    <div class="d-flex flex-column mt-5 mt-md-0 justify-content-center align-items-center vh-100 vw-100">
-        <div class="container d-flex flex-column p-lg-5 p-2 m-2">
+    <div class="d-flex flex-column mt-md-0 justify-content-center align-items-center min-vh-100 vw-100">
+        <div class="form-container d-flex flex-column p-lg-5 p-2 m-2">
             <b-form @submit="console.log('test')">
                 <div class="alert alert-warning" role="alert" v-if="connectionError">
                     {{errorMsg}}                  
                 </div>
                 <h1 class="title">Créer un compte</h1>
+                <b-form-input type="text" placeholder="nom" class="my-3" v-model="form.password"></b-form-input>
+                <b-form-input type="text" placeholder="pseudo" class="my-3" v-model="form.password"></b-form-input>
                 <b-form-input type="email" placeholder="email" class="my-3" v-model="form.email"></b-form-input>
                 <b-form-input type="password" placeholder="mot de passe" class="my-3" v-model="form.password"></b-form-input>
-                <div class="d-flex justify-content-center mt-5">
+                <b-form-input type="password" placeholder="confirmer le mot de passe" class="my-3" v-model="form.password"></b-form-input>
+                <b-form-checkbox value="me"><small>J'accepte les conditions générales d'utilisation.</small></b-form-checkbox>
+                <b-form-checkbox value="that"><small>Je souhaite m'inscrire à la newletter et recevoir des informations promotionnelles et évenementielles.</small></b-form-checkbox>
+                <div class="d-flex justify-content-around mt-5">
+                    <b-button pill variant="light" type="submit" @click="$router.push('/login')">Déjà inscrit</b-button>
                     <b-button pill variant="primary" type="submit">Enregistrer</b-button>
                 </div>
             </b-form>
@@ -38,14 +44,14 @@ export default {
 
 <style lang="scss" scoped>
 
-.container {
+.form-container {
     background-color: white;
     border-radius: 0.5rem;
     width: 25%;
 }
 
-@media (max-width: 767.98px) {
-    .container {
+@media (max-width: 1200px) {
+    .form-container {
         background-color: white;
         border-radius: 0.5rem;
         width: auto;
