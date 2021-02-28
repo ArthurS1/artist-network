@@ -3,11 +3,11 @@
         <div class="form-container d-flex flex-column p-lg-5 p-2 m-2">
             <b-form>
                 <div class="alert alert-warning" role="alert" v-if="error">
-                    {{errorMsg}}                  
+                    {{errorMsg}}
                 </div>
                 <h1 class="title">Créer un compte</h1>
                 <b-form-input type="text" placeholder="nom" class="my-3" v-model="form.name" :class="{'is-valid': legalName}"></b-form-input>
-                <b-form-input type="text" placeholder="pseudo" class="my-3" v-model="form.id" :class="{'is-valid': legalId}"></b-form-input>
+                <b-form-input type="text" placeholder="nom d'utilisateur" class="my-3" v-model="form.username" :class="{'is-valid': legalId}"></b-form-input>
                 <b-form-input type="email" placeholder="email" class="my-3" v-model="form.email" :class="{'is-valid': legalEmail}"></b-form-input>
                 <b-form-input type="password" placeholder="mot de passe" class="my-3" :class="{'is-valid': samePassword}" v-model="form.password"></b-form-input>
                 <b-form-input type="password" placeholder="confirmer le mot de passe" class="my-3" :class="{'is-valid': samePassword}" v-model="passwordConfirmation"></b-form-input>
@@ -31,7 +31,7 @@ export default {
         return {
             form: {
                 name: '',
-                id: '',
+                username: '',
                 email: '',
                 password: '',
                 checkboxes: [],
@@ -43,7 +43,7 @@ export default {
     },
     computed: {
         legalId: function() {
-            return this.form.id != '';
+            return this.form.username != '';
         },
         legalName: function() {
             return this.form.name != '';
@@ -61,8 +61,13 @@ export default {
     },
     methods: {
         handleRegister() {
+            this.error = false;
             this.axios.post('register', this.form).then((response) =>{
-                console.log(response);
+                if (response.data.registration == 'ok')
+                    this.$router.push('/login');
+            }).catch((error) => {
+                this.error = true;
+                this.errorMsg = Object.values(error.response.data.errors);
             });
         }
     }

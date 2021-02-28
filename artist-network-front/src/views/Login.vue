@@ -4,7 +4,6 @@
             <b-form @submit="handleLogin">
                 <div class="alert alert-warning" role="alert" v-if="connectionError">
                     {{connectionErrorMsg}}
-                    
                 </div>
                 <h1 class="title">Connectez-vous</h1>
                 <img src="@/assets/logo.artist.network.svg" class="mx-auto d-block my-5">
