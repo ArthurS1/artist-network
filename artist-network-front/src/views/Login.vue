@@ -21,6 +21,9 @@
 <script>
 export default {
     name: 'Login',
+    beforeCreate: function() {
+        document.body.className = 'image';
+    },
     data() {
         return {
             form: {
@@ -52,7 +55,7 @@ export default {
                 }).catch(this.showConnectionError);
             }).catch(this.showConnectionError);
         }
-    }
+    },
 }
 </script>
 

@@ -27,6 +27,9 @@
 <script>
 export default {
     name: 'Register',
+    beforeCreate: function() {
+        document.body.className = 'image';
+    },
     data() {
         return {
             form: {
@@ -70,7 +73,7 @@ export default {
                 this.errorMsg = Object.values(error.response.data.errors);
             });
         }
-    }
+    },
 }
 </script>
 

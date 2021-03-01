@@ -1,6 +1,6 @@
 <template>
     <transition appear name="fade">
-    <div id="app" class="image">
+    <div id="app">
         <transition name="fade" mode="out-in">
             <router-view/>
         </transition>
@@ -16,12 +16,16 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
-.image {
+body.background {
+    background-color: #f2f2f2ff; 
+}
+
+body.image {
     margin:0;
     padding:0;
-    background: url("./assets/background.jpg") no-repeat center fixed; 
+    background:  url("./assets/background.jpg") no-repeat center fixed; 
     -webkit-background-size: cover;
-    background-size: cover;
+    background-size: cover;    
 }
 
 .fade-enter-active, .fade-leave-active {
