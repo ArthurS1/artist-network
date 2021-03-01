@@ -8,6 +8,8 @@ import VueAxios from 'vue-axios'
 // Components
 import App from './App.vue'
 
+import router from './router'
+
 // Vue configuration
 Vue.config.productionTip = false
 
@@ -17,6 +19,11 @@ Vue.use(VueAxios, Axios.create({
     withCredentials: true,
 }))
 
-new Vue({
-    render: h => h(App),
-}).$mount('#app')
+Vue.axios.get('sanctum/csrf-cookie').then(() => {
+    new Vue({
+        router,
+        render: h => h(App)
+    }).$mount('#app');
+}).catch((error) => {
+    console.log(error);
+});
