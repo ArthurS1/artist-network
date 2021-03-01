@@ -19,7 +19,11 @@ Vue.use(VueAxios, Axios.create({
     withCredentials: true,
 }))
 
-new Vue({
-    router,
-    render: h => h(App)
-}).$mount('#app')
+Vue.axios.get('sanctum/csrf-cookie').then(() => {
+    new Vue({
+        router,
+        render: h => h(App)
+    }).$mount('#app');
+}).catch((error) => {
+    console.log(error);
+});
