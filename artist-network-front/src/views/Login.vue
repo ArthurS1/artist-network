@@ -104,9 +104,4 @@ export default {
         width: auto;
     }
 }
-
-.title {
-    font-weight: 700;
-    text-align: center;
-}
 </style>
