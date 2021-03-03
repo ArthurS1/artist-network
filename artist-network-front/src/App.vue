@@ -40,4 +40,8 @@ body.image {
     opacity: 0;
 }
 
+.title {
+    font-weight: 700;
+    text-align: center;
+}
 </style>

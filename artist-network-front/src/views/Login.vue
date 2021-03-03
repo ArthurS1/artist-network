@@ -81,7 +81,8 @@ export default {
                 .then((response) => {
                     if (response.data.authentication == "ko")
                         this.showLoginError();
-                    else if (response.data.authentication == "ok")
+                    else if (response.data.authentication == "ok")   
+                        this.$store.commit('switchState');
                         this.$router.push("/");
                 })
                 .catch(this.showConnectionError);
@@ -103,10 +104,5 @@ export default {
         border-radius: 0.5rem;
         width: auto;
     }
-}
-
-.title {
-    font-weight: 700;
-    text-align: center;
 }
 </style>
