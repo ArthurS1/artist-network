@@ -1,28 +1,47 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <transition appear name="fade">
+    <div id="app">
+        <transition name="fade" mode="out-in">
+            <router-view/>
+        </transition>
+        </div>
+    </transition>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+body {
+    font-family: 'Montserrat', sans-serif;
 }
-</script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body.background {
+    background-color: #f2f2f2ff; 
+}
+
+body.image {
+    margin:0;
+    padding:0;
+    background:  url("./assets/background.jpg") no-repeat center fixed; 
+    -webkit-background-size: cover;
+    background-size: cover;    
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.2s;
+}
+
+.fade-enter-to, .fade-leave {
+    opacity: 1;
+}
+
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
+
+.title {
+    font-weight: 700;
+    text-align: center;
 }
 </style>
