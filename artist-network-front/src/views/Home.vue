@@ -47,10 +47,11 @@
             <h3 class="title">Publier</h3>
             <p class="text-center w-100 mt-5">aucune image sélectionnée</p>
             <div class="d-flex flex-column mt-2">
-                <b-button pill variant="light m-2"
+                <b-form-input v-model="newPostTitle" placeholder="Titre"></b-form-input>
+                <b-button pill variant="light m-2" :disabled="true"
                     >Sélectionner une image</b-button
                 >
-                <b-button pill variant="primary m-2" :disabled="true"
+                <b-button pill variant="primary m-2" @click="handlePublish"
                     >Publier</b-button
                 >
             </div>
@@ -107,7 +108,7 @@ export default {
                 },
             })
             .then((response) => {
-                this.posts = Object.values(response.data);
+                this.posts = Object.values(response.data).slice().reverse();
                 this.postsOffset += 5;
             });
         window.addEventListener("scroll", this.handleScroll);
@@ -119,11 +120,12 @@ export default {
             posts: {},
             postsOffset: 0,
             needMorePosts: false,
+            newPostTitle: "",
         };
     },
     watch: {
         needMorePosts: function (newValue, oldValue) {
-            if (oldValue == false && newValue == true) {                
+            if (oldValue == false && newValue == true) {
                 this.axios
                     .get("api/posts", {
                         params: {
@@ -131,12 +133,12 @@ export default {
                         },
                     })
                     .then((response) => {
-                        Object.values(response.data).forEach((item) => {
+                        Object.values(response.data).slice().reverse().forEach((item) => {
                             this.posts.push(item);
                         });
                         this.postsOffset += 5;
                         this.needMorePosts = false;
-              });
+                    });
             }
         },
     },
@@ -144,8 +146,18 @@ export default {
         handleLogout() {
             this.axios.get("logout").then((response) => {
                 if (response.data.logout == "ok")
-                    this.$store.commit('switchState');
-                    this.$router.push("/login");
+                    this.$store.commit("switchState");
+                this.$router.push("/login");
+            });
+        },
+        handlePublish() {
+            this.axios.post("api/post", {
+                title: this.newPostTitle,
+            }).then(() => {
+                this.posts = [];
+                this.postsOffset = 0;
+                this.needMorePosts = true;
+                this.showPublish = false;
             });
         },
         handleDelete() {},

@@ -22,6 +22,8 @@ class Post extends Model
         'user_id',
     ];
 
+    protected $hidden = ['user'];
+
     public $timestamps = true;
 
     protected $appends = ['username'];
