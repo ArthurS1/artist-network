@@ -27,7 +27,6 @@ class PostFactory extends Factory
             'views' => $this->faker->numberBetween(0, 200),
             'likes' => $this->faker->numberBetween(0, 200),
             'user_id' => User::inRandomOrder()->first()->id,
-            'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),
         ];
     }
 }

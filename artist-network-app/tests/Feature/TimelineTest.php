@@ -9,12 +9,13 @@ use App\Models\Post;
 use App\Models\User;
 use Tests\TestCase;
 
+
 class TimelineTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     /**
-     * A basic feature test example.
+     * A basic loading of new older posts.
      *
      * @return void
      */
@@ -28,7 +29,7 @@ class TimelineTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * A basic loading when there is no posts anymore to load.
      *
      * @return void
      */
@@ -38,6 +39,25 @@ class TimelineTest extends TestCase
 
         $response = $this->actingAs($user)->get("/api/posts", ["offset" => "1"]);
         $response->assertJson([]);
+        $response->assertStatus(200);
+    }
+
+    /**
+     * A basic post by the user.
+     *
+     * @return void
+     */
+    public function test_user_add_post()
+    {
+        $user = User::factory()->create();
+        $postTitle = $this->faker->sentence(6, true);
+
+        $response = $this->actingAs($user)->post("/api/post", [
+            "title" => $postTitle,
+        ]);
+        $this->assertDatabaseHas('posts', [
+            'title' => $postTitle,
+        ]);
         $response->assertStatus(200);
     }
 }

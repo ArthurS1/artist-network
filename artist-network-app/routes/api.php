@@ -16,3 +16,4 @@ use App\Http\Controllers\TimelineController;
 */
 
 Route::get('posts', [TimelineController::class, "last"])->middleware('auth:sanctum');
+Route::post('post', [TimelineController::class, "post"])->middleware('auth:sanctum');

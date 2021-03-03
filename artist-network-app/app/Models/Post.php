@@ -10,7 +10,19 @@ class Post extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'likes',
+        'views',
+        'user_id',
+    ];
+
+    public $timestamps = true;
 
     protected $appends = ['username'];
 

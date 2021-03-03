@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->integer('likes');
             $table->integer('views');
             $table->foreignId('user_id');
-            $table->timestamp('created_at');
+            $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
