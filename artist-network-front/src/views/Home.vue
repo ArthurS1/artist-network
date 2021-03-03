@@ -131,11 +131,9 @@ export default {
                         },
                     })
                     .then((response) => {
-                        console.log("recieved new data");
                         Object.values(response.data).forEach((item) => {
                             this.posts.push(item);
                         });
-                        console.log(this.posts)
                         this.postsOffset += 5;
                         this.needMorePosts = false;
               });
