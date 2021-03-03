@@ -12,7 +12,19 @@ class Post extends Model
 
     public $timestamps = false;
 
-    public function user() {
+    protected $appends = ['username'];
+
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d',
+    ];
+
+    public function getUsernameAttribute()
+    {
+        return $this->user->username;
+    }
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

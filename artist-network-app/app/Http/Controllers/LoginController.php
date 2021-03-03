@@ -22,7 +22,6 @@ class LoginController extends Controller
 
             return response()->json(['authentication' => 'ok']);
         }
-
         return response()->json(['authentication' => 'ko']);
     }
 }

@@ -56,13 +56,13 @@
             </div>
         </b-modal>
         <div class="d-flex flex-column align-items-center">
-            <div class="form-container d-flex flex-column p-lg-3 p-2 m-2">
+            <div v-for="post in posts" :key="post.id" class="form-container d-flex flex-column p-lg-3 p-2 m-2">
                 <div class="">
                     <div class="d-flex justify-content-between">
-                        <p>ArthurS</p>
-                        <p>02/03/21 22:11</p>
+                        <p>{{post.username}}</p>
+                        <p>{{post.created_at}}</p>
                     </div>
-                    <h3>Titre.</h3>
+                    <h3>{{post.title}}</h3>
                     <div class="d-flex flex-column align-content-center">
                         <b-img
                             rounded
@@ -76,46 +76,14 @@
                                 class="mr-2"
                                 variant="danger"
                             ></b-icon-suit-heart-fill>
-                            <small>20</small>
+                            <small>{{post.likes}}</small>
                         </div>
                         <div>
                             <b-icon-binoculars
                                 class="mr-2"
                                 variant="primary"
                             ></b-icon-binoculars>
-                            <small>20</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-container d-flex flex-column p-lg-3 p-2 m-2">
-                <div class="">
-                    <div class="d-flex justify-content-between">
-                        <p>ArthurS</p>
-                        <p>02/03/21 22:11</p>
-                    </div>
-                    <h3>Titre.</h3>
-                    <div class="d-flex flex-column align-content-center">
-                        <b-img
-                            rounded
-                            class="my-2"
-                            src="https://picsum.photos/250/250/?image=54"
-                        ></b-img>
-                    </div>
-                    <div class="d-flex align-content-center">
-                        <div class="mr-2">
-                            <b-icon-suit-heart-fill
-                                class="mr-2"
-                                variant="danger"
-                            ></b-icon-suit-heart-fill>
-                            <small>20</small>
-                        </div>
-                        <div>
-                            <b-icon-binoculars
-                                class="mr-2"
-                                variant="primary"
-                            ></b-icon-binoculars>
-                            <small>20</small>
+                            <small>{{post.views}}</small>
                         </div>
                     </div>
                 </div>
@@ -130,10 +98,20 @@ export default {
     beforeCreate: function () {
         document.body.className = "background";
     },
+    created() {
+        this.axios.get("api/posts", {
+            params: {
+                offset: 0,
+            }
+        }).then((response) => {
+            this.posts = Object.values(response.data);
+        }); 
+    },
     data() {
         return {
             showAccount: false,
             showPublish: false,
+            posts: {},
         };
     },
     methods: {
