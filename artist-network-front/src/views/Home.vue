@@ -56,13 +56,17 @@
             </div>
         </b-modal>
         <div class="d-flex flex-column align-items-center">
-            <div v-for="post in posts" :key="post.id" class="form-container d-flex flex-column p-lg-3 p-2 m-2">
+            <div
+                v-for="post in posts"
+                :key="post.id"
+                class="form-container d-flex flex-column p-lg-3 p-2 m-2"
+            >
                 <div class="">
                     <div class="d-flex justify-content-between">
-                        <p>{{post.username}}</p>
-                        <p>{{post.created_at}}</p>
+                        <p>{{ post.username }}</p>
+                        <p>{{ post.created_at }}</p>
                     </div>
-                    <h3>{{post.title}}</h3>
+                    <h3>{{ post.title }}</h3>
                     <div class="d-flex flex-column align-content-center">
                         <b-img
                             rounded
@@ -76,14 +80,11 @@
                                 class="mr-2"
                                 variant="danger"
                             ></b-icon-suit-heart-fill>
-                            <small>{{post.likes}}</small>
+                            <small>{{ post.likes }}</small>
                         </div>
                         <div>
-                            <b-icon-binoculars
-                                class="mr-2"
-                                variant="primary"
-                            ></b-icon-binoculars>
-                            <small>{{post.views}}</small>
+                            <b-icon-binoculars class="mr-2"></b-icon-binoculars>
+                            <small>{{ post.views }}</small>
                         </div>
                     </div>
                 </div>
@@ -99,20 +100,47 @@ export default {
         document.body.className = "background";
     },
     created() {
-        this.axios.get("api/posts", {
-            params: {
-                offset: 0,
-            }
-        }).then((response) => {
-            this.posts = Object.values(response.data);
-        }); 
+        this.axios
+            .get("api/posts", {
+                params: {
+                    offset: this.postsOffset,
+                },
+            })
+            .then((response) => {
+                this.posts = Object.values(response.data);
+                this.postsOffset += 5;
+            });
+        window.addEventListener("scroll", this.handleScroll);
     },
     data() {
         return {
             showAccount: false,
             showPublish: false,
             posts: {},
+            postsOffset: 0,
+            needMorePosts: false,
         };
+    },
+    watch: {
+        needMorePosts: function (newValue, oldValue) {
+            if (oldValue == false && newValue == true) {                
+                this.axios
+                    .get("api/posts", {
+                        params: {
+                            offset: this.postsOffset,
+                        },
+                    })
+                    .then((response) => {
+                        console.log("recieved new data");
+                        Object.values(response.data).forEach((item) => {
+                            this.posts.push(item);
+                        });
+                        console.log(this.posts)
+                        this.postsOffset += 5;
+                        this.needMorePosts = false;
+              });
+            }
+        },
     },
     methods: {
         handleLogout() {
@@ -121,6 +149,23 @@ export default {
             });
         },
         handleDelete() {},
+        handleScroll() {
+            var body = document.body;
+            var html = document.documentElement;
+            var height = Math.max(
+                body.scrollHeight,
+                body.offsetHeight,
+                html.clientHeight,
+                html.scrollHeight,
+                html.offsetHeight
+            );
+
+            if (window.scrollY + window.innerHeight >= height - height / 10)
+                this.needMorePosts = true;
+        },
+    },
+    destroyed() {
+        window.removeEventListener("scroll", this.handleScroll);
     },
 };
 </script>
