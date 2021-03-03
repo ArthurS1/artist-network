@@ -143,7 +143,9 @@ export default {
     methods: {
         handleLogout() {
             this.axios.get("logout").then((response) => {
-                if (response.data.logout == "ok") this.$router.push("/login");
+                if (response.data.logout == "ok")
+                    this.$store.commit('switchState');
+                    this.$router.push("/login");
             });
         },
         handleDelete() {},
