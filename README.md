@@ -1,16 +1,18 @@
-# Le réseau des artistes arthur1.soulie
+# Artist-Network
 
-Lancer le front:
+This is an example web app.
+
+Run frontend :
 ```
 cd artist-network-front && npm run serve
 ```
 
-Lancer le back:
+Run backend :
 ```
 cd artist-network-app && php artisan run serve
 ```
 
-Les 2 doivent être sur le même domaine. Le cas échéant enverra une erreur CORS.
+The two parts must be on the same domain or else you will encounter a CORS error
 ```
 127.0.0.1 app.artist-network.local
 127.0.0.1 api.artist-network.local
