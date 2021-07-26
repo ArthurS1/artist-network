@@ -1,6 +1,7 @@
 # Artist-Network
 
-This is an example web app.
+An example spa web app using laravel and vueJS.
+
 
 Run frontend :
 ```
